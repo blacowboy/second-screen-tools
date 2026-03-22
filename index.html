@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>翻页时钟</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="clock">
+            <div class="time-group">
+                <div class="flip-unit" id="hours-tens">
+                    <div class="number">0</div>
+                </div>
+                <div class="flip-unit" id="hours-ones">
+                    <div class="number">0</div>
+                </div>
+            </div>
+            <div class="separator">:</div>
+            <div class="time-group">
+                <div class="flip-unit" id="minutes-tens">
+                    <div class="number">0</div>
+                </div>
+                <div class="flip-unit" id="minutes-ones">
+                    <div class="number">0</div>
+                </div>
+            </div>
+            <div class="separator">:</div>
+            <div class="time-group">
+                <div class="flip-unit" id="seconds-tens">
+                    <div class="number">0</div>
+                </div>
+                <div class="flip-unit" id="seconds-ones">
+                    <div class="number">0</div>
+                </div>
+            </div>
+        </div>
+        <div class="poem-container">
+            <div class="poem-content">
+                <p id="hitokoto">正在加载...</p>
+                <p id="hitokoto_from"></p>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

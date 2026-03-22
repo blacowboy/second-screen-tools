@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>配置 - 翻页时钟</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            padding: 30px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #e94560;
+            font-size: 24px;
+        }
+
+        .section {
+            margin-bottom: 25px;
+        }
+
+        .section h2 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #e94560;
+            border-bottom: 1px solid rgba(233, 69, 96, 0.3);
+            padding-bottom: 8px;
+        }
+
+        .option {
+            margin-bottom: 15px;
+        }
+
+        .option label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: #ddd;
+        }
+
+        .option select,
+        .option input[type="number"],
+        .option input[type="time"] {
+            width: 100%;
+            padding: 8px 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            color: #fff;
+            font-size: 14px;
+        }
+
+        .option select:focus,
+        .option input:focus {
+            outline: none;
+            border-color: #e94560;
+            box-shadow: 0 0 0 2px rgba(233, 69, 96, 0.3);
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .radio-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .radio-item input[type="radio"] {
+            accent-color: #e94560;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 30px;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-save {
+            background: #e94560;
+            color: #fff;
+        }
+
+        .btn-save:hover {
+            background: #d63854;
+        }
+
+        .btn-cancel {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-cancel:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .custom-time {
+            display: none;
+        }
+
+        .option[data-visible="true"] .custom-time {
+            display: block;
+        }
+
+        .frequency-options {
+            display: flex;
+            gap: 10px;
+            margin-top: 5px;
+        }
+
+        .frequency-option {
+            padding: 6px 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .frequency-option.active {
+            background: #e94560;
+            border-color: #e94560;
+        }
+
+        .frequency-option:hover {
+            background: rgba(233, 69, 96, 0.2);
+        }
+
+        .api-type-options {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 5px;
+        }
+
+        .api-type-option {
+            padding: 8px 16px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .api-type-option.active {
+            background: #e94560;
+            border-color: #e94560;
+        }
+
+        .api-type-option:hover {
+            background: rgba(233, 69, 96, 0.2);
+        }
+
+        .status {
+            margin-top: 10px;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border-left: 3px solid #e94560;
+        }
+
+        .status.success {
+            border-left-color: #4CAF50;
+        }
+
+        .status.error {
+            border-left-color: #f44336;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>翻页时钟配置</h1>
+
+        <div class="section">
+            <h2>时间设置</h2>
+            <div class="radio-group">
+                <div class="radio-item">
+                    <input type="radio" id="time-system" name="time-source" value="system" checked>
+                    <label for="time-system">系统时间</label>
+                </div>
+                <div class="radio-item">
+                    <input type="radio" id="time-ntp" name="time-source" value="ntp">
+                    <label for="time-ntp">NTP 同步</label>
+                </div>
+                <div class="radio-item">
+                    <input type="radio" id="time-custom" name="time-source" value="custom">
+                    <label for="time-custom">自定义时间</label>
+                </div>
+            </div>
+            
+            <div class="option" id="custom-time-container">
+                <label for="custom-time">设置时间</label>
+                <div class="custom-time">
+                    <input type="time" id="custom-time" step="1">
+                </div>
+            </div>
+            
+            <div id="time-status" class="status">
+                当前使用：系统时间
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>内容设置</h2>
+            <div class="option">
+                <label>API 类型</label>
+                <div class="api-type-options">
+                    <div class="api-type-option active" data-type="sc">诗词</div>
+                    <div class="api-type-option" data-type="djt">毒鸡汤</div>
+                    <div class="api-type-option" data-type="tgrj">舔狗日记</div>
+                </div>
+                <input type="hidden" id="api-type" value="sc">
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>刷新设置</h2>
+            <div class="option">
+                <label>API 刷新频率</label>
+                <div class="frequency-options">
+                    <div class="frequency-option" data-minutes="60">1小时</div>
+                    <div class="frequency-option active" data-minutes="720">12小时</div>
+                    <div class="frequency-option" data-minutes="1440">24小时</div>
+                    <div class="frequency-option" data-minutes="30">30分钟</div>
+                    <div class="frequency-option" data-minutes="15">15分钟</div>
+                </div>
+                <input type="hidden" id="refresh-frequency" value="720">
+            </div>
+        </div>
+
+        <div class="buttons">
+            <button class="btn-cancel" id="btn-cancel">取消</button>
+            <button class="btn-save" id="btn-save">保存</button>
+        </div>
+    </div>
+
+    <script>
+        const { ipcRenderer } = require('electron');
+
+        // 加载当前配置
+        ipcRenderer.send('get-config');
+
+        // 时间源切换
+        document.querySelectorAll('input[name="time-source"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                const value = this.value;
+                const customTimeContainer = document.getElementById('custom-time-container');
+                const timeStatus = document.getElementById('time-status');
+                
+                if (value === 'custom') {
+                    customTimeContainer.dataset.visible = 'true';
+                    timeStatus.textContent = '当前使用：自定义时间';
+                } else {
+                    customTimeContainer.dataset.visible = 'false';
+                    if (value === 'system') {
+                        timeStatus.textContent = '当前使用：系统时间';
+                    } else if (value === 'ntp') {
+                        timeStatus.textContent = '当前使用：NTP 同步时间';
+                    }
+                }
+            });
+        });
+
+        // API 类型选择
+        document.querySelectorAll('.api-type-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.api-type-option').forEach(opt => opt.classList.remove('active'));
+                this.classList.add('active');
+                document.getElementById('api-type').value = this.dataset.type;
+            });
+        });
+
+        // 刷新频率选择
+        document.querySelectorAll('.frequency-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.frequency-option').forEach(opt => opt.classList.remove('active'));
+                this.classList.add('active');
+                document.getElementById('refresh-frequency').value = this.dataset.minutes;
+            });
+        });
+
+        // 保存按钮
+        document.getElementById('btn-save').addEventListener('click', function() {
+            const config = {
+                timeSource: document.querySelector('input[name="time-source"]:checked').value,
+                customTime: document.getElementById('custom-time').value,
+                apiType: document.getElementById('api-type').value,
+                refreshFrequency: parseInt(document.getElementById('refresh-frequency').value)
+            };
+            
+            ipcRenderer.send('save-config', config);
+        });
+
+        // 取消按钮
+        document.getElementById('btn-cancel').addEventListener('click', function() {
+            ipcRenderer.send('close-config');
+        });
+
+        // 接收配置数据
+        ipcRenderer.on('config-data', (event, config) => {
+            // 时间源
+            document.querySelector(`input[name="time-source"][value="${config.timeSource}"]`).checked = true;
+            
+            // 自定义时间
+            if (config.customTime) {
+                document.getElementById('custom-time').value = config.customTime;
+            }
+            
+            // 触发时间源变更事件
+            document.querySelector('input[name="time-source"]:checked').dispatchEvent(new Event('change'));
+            
+            // API 类型
+            document.querySelectorAll('.api-type-option').forEach(option => {
+                option.classList.remove('active');
+                if (option.dataset.type === config.apiType) {
+                    option.classList.add('active');
+                }
+            });
+            document.getElementById('api-type').value = config.apiType;
+            
+            // 刷新频率
+            document.querySelectorAll('.frequency-option').forEach(option => {
+                option.classList.remove('active');
+                if (parseInt(option.dataset.minutes) === config.refreshFrequency) {
+                    option.classList.add('active');
+                }
+            });
+            document.getElementById('refresh-frequency').value = config.refreshFrequency;
+        });
+
+        // 接收保存结果
+        ipcRenderer.on('config-saved', (event, success) => {
+            const timeStatus = document.getElementById('time-status');
+            if (success) {
+                timeStatus.textContent = '配置保存成功！';
+                timeStatus.className = 'status success';
+                setTimeout(() => {
+                    ipcRenderer.send('close-config');
+                }, 1000);
+            } else {
+                timeStatus.textContent = '配置保存失败！';
+                timeStatus.className = 'status error';
+            }
+        });
+    </script>
+</body>
+</html>

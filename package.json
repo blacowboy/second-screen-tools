@@ -1,0 +1,172 @@
+{
+  "name": "flip-clock",
+  "version": "1.0.0",
+  "description": "翻页时钟桌面应用 - 支持 Windows、Linux、macOS",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder",
+    "build:win": "electron-builder --win",
+    "build:win:portable": "electron-builder --win portable",
+    "build:linux": "electron-builder --linux",
+    "build:linux:deb": "electron-builder --linux deb",
+    "build:linux:appimage": "electron-builder --linux AppImage",
+    "build:mac": "electron-builder --mac",
+    "pack": "electron-builder --dir",
+    "postinstall": "electron-builder install-app-deps"
+  },
+  "keywords": [
+    "clock",
+    "flip-clock",
+    "desktop",
+    "electron",
+    "cross-platform"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^28.3.3",
+    "electron-builder": "^24.9.1"
+  },
+  "build": {
+    "appId": "com.example.flipclock",
+    "productName": "翻页时钟",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "index.html",
+      "style.css",
+      "script.js",
+      "preload.js",
+      "config.html",
+      "assets/**/*"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64",
+            "ia32"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64",
+            "ia32"
+          ]
+        },
+        {
+          "target": "zip",
+          "arch": [
+            "x64",
+            "ia32"
+          ]
+        }
+      ],
+      "icon": "assets/icon.ico",
+      "publisherName": "Flip Clock",
+      "verifyUpdateCodeSignature": false
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "installerIcon": "assets/icon.ico",
+      "uninstallerIcon": "assets/icon.ico",
+      "installerHeaderIcon": "assets/icon.ico",
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "翻页时钟",
+      "artifactName": "flip-clock-setup-${version}-${arch}.${ext}"
+    },
+    "portable": {
+      "artifactName": "flip-clock-portable-${version}-${arch}.${ext}"
+    },
+    "linux": {
+      "target": [
+        {
+          "target": "AppImage",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "deb",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "snap",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "rpm",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "tar.gz",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "category": "Utility",
+      "icon": "assets/icon.png",
+      "maintainer": "",
+      "vendor": "",
+      "synopsis": "翻页时钟桌面应用",
+      "description": "一个精美的翻页时钟桌面应用，带有翻页动画效果，精确到秒，并显示古诗词。",
+      "desktop": {
+        "Name": "翻页时钟",
+        "Comment": "翻页时钟桌面应用",
+        "Categories": "Utility;Clock;",
+        "StartupNotify": "true",
+        "Terminal": "false"
+      }
+    },
+    "mac": {
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        },
+        {
+          "target": "zip",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        }
+      ],
+      "icon": "assets/icon.icns",
+      "category": "public.app-category.utilities",
+      "artifactName": "flip-clock-${version}-${arch}.${ext}"
+    },
+    "appImage": {
+      "artifactName": "flip-clock-${version}-${arch}.${ext}"
+    },
+    "deb": {
+      "artifactName": "flip-clock-${version}-${arch}.${ext}",
+      "depends": [
+        "gconf2",
+        "gconf-service",
+        "libnotify4",
+        "libappindicator1",
+        "libxtst6",
+        "libnss3",
+        "libxss1"
+      ]
+    }
+  }
+}

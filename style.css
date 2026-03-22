@@ -1,0 +1,208 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+}
+
+.clock {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    width: calc(100vw - 20px);
+    max-width: calc(100% - 20px);
+    margin: 0 10px;
+}
+
+.time-group {
+    display: flex;
+    gap: 10px;
+    flex: 1;
+}
+
+.separator {
+    font-size: 300px;
+    color: #e94560;
+    font-weight: bold;
+    text-shadow: 0 0 70px rgba(233, 69, 96, 0.5);
+    animation: pulse 1s ease-in-out infinite;
+    margin: 0 25px;
+    flex-shrink: 0;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.flip-unit {
+    position: relative;
+    flex: 1;
+    height: 500px;
+    min-width: 240px;
+    background: #2d2d44;
+    border-radius: 28px;
+    box-shadow: 
+        0 14px 28px rgba(0, 0, 0, 0.8),
+        0 0 0 1px rgba(255, 255, 255, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.flip-unit .number {
+    color: #fff;
+    font-size: 400px;
+    font-weight: bold;
+    line-height: 1;
+    margin: 0;
+}
+
+.poem-container {
+    text-align: center;
+    max-width: calc(100vw - 20px);
+    min-width: 300px;
+    width: fit-content;
+    padding: 30px 50px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.poem-content {
+    color: #fff;
+}
+
+#hitokoto {
+    font-size: 28px;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    font-family: 'STKaiti', 'KaiTi', 'SimKaiti', serif;
+    letter-spacing: 4px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+#hitokoto_from {
+    font-size: 16px;
+    color: #a0a0a0;
+    font-style: italic;
+}
+
+@media (max-width: 1400px) {
+    .flip-unit {
+        height: 400px;
+        min-width: 200px;
+    }
+    
+    .flip-unit .number {
+        font-size: 320px;
+    }
+    
+    .separator {
+        font-size: 240px;
+    }
+    
+    .poem-container {
+        max-width: calc(100vw - 20px);
+        padding: 25px 40px;
+    }
+    
+    #hitokoto {
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 1200px) {
+    .flip-unit {
+        height: 350px;
+        min-width: 180px;
+    }
+    
+    .flip-unit .number {
+        font-size: 280px;
+    }
+    
+    .separator {
+        font-size: 200px;
+    }
+    
+    .poem-container {
+        max-width: calc(100vw - 20px);
+        padding: 20px 35px;
+    }
+    
+    #hitokoto {
+        font-size: 22px;
+    }
+}
+
+@media (max-width: 768px) {
+    .flip-unit {
+        height: 250px;
+        min-width: 120px;
+    }
+    
+    .flip-unit .number {
+        font-size: 200px;
+    }
+    
+    .separator {
+        font-size: 160px;
+    }
+    
+    .poem-container {
+        max-width: calc(100vw - 20px);
+        min-width: 250px;
+        padding: 15px 25px;
+    }
+    
+    #hitokoto {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 480px) {
+    .flip-unit {
+        height: 200px;
+        min-width: 100px;
+    }
+    
+    .flip-unit .number {
+        font-size: 160px;
+    }
+    
+    .separator {
+        font-size: 120px;
+    }
+    
+    .poem-container {
+        max-width: calc(100vw - 20px);
+        min-width: 200px;
+        padding: 10px 20px;
+    }
+    
+    #hitokoto {
+        font-size: 16px;
+    }
+}
