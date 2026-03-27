@@ -61,6 +61,9 @@ function createWindow() {
     });
 
     mainWindow.loadFile('index.html');
+    
+    // 打开开发者工具（调试模式）
+    mainWindow.webContents.openDevTools();
 
     mainWindow.once('ready-to-show', () => {
         mainWindow.show();
